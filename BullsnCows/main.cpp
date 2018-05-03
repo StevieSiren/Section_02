@@ -18,6 +18,7 @@ void PrintIntro();
 void PlayGame();
 FText GetValidGuess();
 bool AskToPlayAgain();
+void PrintGameSummary();
 
 FBullCowGame BCGame; //Instantiate (create an instance of) a new game
 
@@ -50,7 +51,9 @@ void PrintIntro()
 	//Introduce the game
 	int32 WORD_LENGTH = BCGame.GetHiddenWordLength();
 
-	std::cout << "\n\nWelcome to Bulls and Cows, a fun word guessing game!\n";
+	std::cout << "\n\nWelcome to Bulls and Cows, a fun word guessing game!" << std::endl;
+	std::cout << "Rules: Guess a word - you will receive a 'Bull' for a correct letter in the right order.\n";
+	std::cout << "A 'Cow' is given when a correct letter is present, but not in the right order.\n";
 	std::cout << "Can you guess the " << WORD_LENGTH;
 	std::cout << " letter isogram I'm thinking of?\n";
 	std::cout << std::endl;
@@ -67,7 +70,8 @@ FText GetValidGuess()
 		// get a guess from the player
 		int32 currentTry = BCGame.GetCurrentTry();
 
-		std::cout << "Try " << currentTry << ". Enter your guess: ";
+		std::cout << "Try " << currentTry << " of " << BCGame.GetMaxTries(); 
+		std::cout << ". Enter your guess : ";
 		
 		std::getline(std::cin, Guess);
 
@@ -125,5 +129,21 @@ void PlayGame()
 		std::cout << "Your guess is: " << Guess << std::endl;
 		std::cout << std::endl;
 	}
+	
+	PrintGameSummary();
+	return;
+}
+
+void PrintGameSummary()
+{
+	if (BCGame.IsGameWon())
+	{
+		std::cout << "YOU WIN!\n";
+	}
+	else
+	{
+		std::cout << "Better luck next time!\n";
+	}
+
 }
 
